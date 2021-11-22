@@ -1,0 +1,97 @@
+%- Identification -%
+
+% Version
+\def\fileversion{1.00}
+\def\filedate{2021/08/17}
+
+% Sets the LaTeX version for the package to work.
+\NeedsTeXFormat{LaTeX2e}
+
+% LateX 3 Syntax
+\RequirePackage{expl3}
+
+% Identification of the package
+\ProvidesExplPackage{star-rating}
+	{\filedate}
+	{\fileversion}
+	{Star rating}
+
+%- Packages -%
+
+%-- Graphics --%
+\RequirePackage{tikz}
+
+%- Path -%
+\RequirePackage{xpatch}
+
+%- Patch -%
+
+% Patching  library in expl3 removing white spaces
+\patchcmd
+	{\pgfutil@InputIfFileExists}
+	{\input #1}
+	{%
+		\@pushfilename
+		\xdef\@currname{#1}%
+		\input #1 %
+		\@popfilename
+	}
+	{}{}
+
+%- Package options -%
+
+\str_new:N \l__ptxcd_star_color_str
+\str_new:N \l__ptxcd_star_no_color_str
+
+\keys_define:nn {ptxcd/starrating}{
+    color .code:n=\str_set:Nn \l__ptxcd_star_color_str {#1},
+    color .default:n=yellow,
+    color .initial:n=yellow,
+    unfilled .code:n=\str_set:Nn \l__ptxcd_star_no_color_str {#1},
+    unfilled .default:n=gray,
+    unfilled .initial:n=gray,
+}
+
+\ProcessKeysOptions{ptxcd/starrating}
+
+%- Graphics -%
+
+\usetikzlibrary{shapes.geometric, calc}
+
+% Star rating graphic
+% \stars{difficulty}{total}
+\newcommand{\stars}[2]{
+    \pgfmathsetmacro\pgfxa{#1 + 1}
+    \tikzstyle{scorestars} = [
+        anchor=outer~point~3,
+        draw,
+        inner~sep=.15em,
+        star,
+        star~points=5,
+        star~point~ratio=2.25
+        ]
+        
+    \begin{tikzpicture}[baseline]
+        \foreach \i in {1, ..., #2} {
+                \pgfmathparse{\i <= #1 ? "\l__ptxcd_star_color_str" : "\l__ptxcd_star_no_color_str"}
+                \edef\starcolor{\pgfmathresult}
+                \draw (\i * 1em, 0)
+                node[
+                    name = star\i,
+                    scorestars,
+                    fill = \starcolor
+                ] {};
+        }
+        
+        \pgfmathparse{#1 > int(#1) ? int(#1 + 1) : 0}
+        \let\partstar = \pgfmathresult
+        \ifnum\partstar > 0
+            \pgfmathsetmacro\starpart{#1 - int(#1)}
+            \path[clip] ($(star\partstar.outer point 3)!(star\partstar.outer point 2)!(star\partstar.outer point 4)$) rectangle
+            ($(star\partstar.outer point 2 |- star\partstar.outer point 1)!\starpart!(star\partstar.outer point 1 -| star\partstar.outer point 5)$);
+            \fill (\partstar * 1em, 0) node[scorestars, fill=\starcolor] {};
+        \fi
+    \end{tikzpicture}
+}
+
+%- Additional configurations -%
