@@ -1,0 +1,340 @@
+\documentclass{../tuda-exercise}
+
+% Title information
+\version{20. November 2021}
+\sheetnumber{1}
+
+% Fix url underfull hbox
+\Urlmuskip=0mu plus 10mu
+
+\begin{document}
+
+  \maketitle
+
+  \begin{task}[credit=\stars{0}{3}]{FopBot}
+    Beschreiben Sie kurz in ihren eigenen Worten worum es sich bei FopBot handelt, wie die Welt
+    aufgebaut ist und
+    welche Grundfunktionen jeder Roboter beherrscht.
+
+    \begin{note}[
+      title=Für alle Aufgaben auf diesem und allen weiteren Übungsblättern:,
+      color=tuda-red
+    ]
+      In der Abschlussklausur werden Sie keine Hilfsmittel zur Verfügung haben. Üben Sie also
+      schon zu Beginn auch ohne Entwicklungsumgebung und nur mit Stift und Papier zu
+      programmieren. Abschließend können Sie dann ihre vollständige Lösung in die
+      Entwicklungsumgebung übertragen und überprüfen.
+    \end{note}
+
+    \begin{solution}
+      FopBot ist ein Package mit mehreren Klassen. Man kann damit eine beliebige Welt (mit
+      Wänden) generieren und beliebig viele Objekte vom Typ Robot rein setzen, die jeweils
+      beliebig viele Coins haben können. In der Klasse Robot sind mehrere Methoden, die es dem
+      Robot erlauben mit der Welt zu interagieren wie bspw. move(), die den Robot in eine
+      Richtung laufen lässt (eine Richtung ist mithilfe von Directions als Enumeration umgesetzt).
+
+      \begin{note}[title=Information:]
+        \enquote{Ein Package ist ein Namespace mithilfe dessen eine Reihe verwandter Klassen und
+        Interfaces organsisiert werden können.}(\url{https://docs.oracle.com/
+        javase/tutorial/java/concepts/package.html})
+
+        \br
+
+        Als Beispiel dazu das Package \inlinejava{java.awt}. Dieses Package enthält Klassen zum
+        Erstellen von Benutzeroberflächen und zum Zeichnen von Grafiken und Bildern.
+
+        \br
+
+        Mithilfe des folgenden Verweises können Sie sich einen Überblick über Packages verschaffen:
+
+        \begin{center}
+          \url{https://docs.oracle.com/en/java/javase/11/docs/api/allpackages-index.html}
+        \end{center}
+
+        Mehr Informationen zu FopBot finden Sie unter den folgenden Verweisen:
+
+        \begin{itemize}
+          \item Sourcecode: \url{https://github.com/FOP-2022/FOPBot}
+          \item Dokumentation: \url{https://fop-2022.github.io/FOPBot/fopbot/package-summary.html}
+        \end{itemize}
+      \end{note}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{0}{3}]{Liegen geblieben}
+    Betrachten Sie den folgenden Codeausschnitt/führen Sie ihn selbst einmal aus:
+
+    \lstinputlisting[style=Java]{codes/V2_Task.java}
+
+    \begin{solution}
+      Es kommt in der Zeile 4 zu einem Fehler, weil der Roboter keinen Coin hat, den er ablegen
+      kann.
+    \end{solution}
+  \end{task}
+
+  \clearpagenosolution
+
+  \begin{task}[credit=\stars{1}{3}]{Rechteck}
+    Schreiben Sie ein Programm, welches zwei Roboter \inlinejava{putbot} und \inlinejava{pickbot}
+    erstellt. Dabei soll \inlinejava{putbot} mit Coins ein Rechteck der Höhe \inlinejava{5} und
+    der Breite \inlinejava{3} zeichnen. Es sollen nur die Seiten des Rechtecks gezeichnet werden,
+    die restlichen innen liegenden Felder des Rechtecks bleiben unberührt. Nachdem das Rechteck
+    gezeichnet wurde, soll \inlinejava{pickbot} alle Coins wieder einsammeln. Überlegen Sie sich,
+    wie Sie das Programm mit nur einer Schleife pro Roboter gestalten können.
+
+    \begin{figure}[h]
+      \centering
+      \begin{FOPBotWorld}{5}{6}
+        \foreach \x/\y in {
+            {0/0},
+            {0/1},
+            {0/2},
+            {0/3},
+            {0/4},
+            {2/0},
+            {2/1},
+            {2/2},
+            {2/3},
+            {2/4},
+            {1/0},
+            {1/4},
+        }{
+          \putcoin{\x}{\y}{1}
+        }
+        \path (0,0) pic {Trianglebot};
+        \path (0,0) pic[rotate=270] {Trianglebot};
+      \end{FOPBotWorld}
+      \caption{Fertiggestelltes Rechteck durch \inlinejava{putbot}}
+    \end{figure}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V3_Solution.java}
+
+      \begin{note}[title=Information:]
+        Der Lösungsvorschlag verwendet in Zeile 19 und 41 \enquote{Bedingte Operatoren}. In
+        diesem Fall ist es ein logisches oder, d.h. wenn Bedingung 1 oder 2 zutrifft, dann führen
+        wir die folgenden Anweisungen aus.
+
+        \begin{table}[H]
+          \centering
+          \begin{tabular}{ccc}
+            \toprule
+            Erste Bedingung & Zweite Bedingung & Ausführung der Anweisungen?
+            \\\midrule
+            \inlinejava{false} & \inlinejava{alse} & Nein
+            \\
+            \inlinejava{false} & \inlinejava{true} & Ja
+            \\
+            \inlinejava{true} & \inlinejava{false} & Ja
+            \\
+            \inlinejava{true} & \inlinejava{true} & Ja
+            \\\bottomrule
+          \end{tabular}
+          \caption{Wahrheitstabelle zum logischen oder}
+        \end{table}
+
+        Als alternative zum logischen oder könnte man zwei unabhängige \inlinejava{if}-Abfragen
+        verwenden:
+
+        \lstinputlisting[style=Java]{codes/V3_Information.java}
+
+        Mehr Informationen zu bedingten Operatoren kann man unter folgendem Verweis finden:
+
+        \begin{center}
+          \url{https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op2.html}
+        \end{center}
+      \end{note}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{1}{3}]{Bedingungen I}
+    Betrachten Sie folgenden Codeausschnitt:
+
+    \lstinputlisting[style=Java]{codes/V4_Task.java}
+
+    Beschreiben Sie in eigenen Worten, welchem Zweck dieser Codeausschnitt dient. Erweitern Sie
+    außerdem den Code so, dass \inlinejava{bot1} nur einen Coin ablegt, wenn er auch mindestens
+    einen besitzt.
+
+    \clearpagesolution
+
+    \begin{solution}
+      Es wird ein Roboter an der Position \inlinejava{(3, 1)} mit der Blickrichtung nach oben
+      platziert. Dieser Roboter hat eine Münze und führt einen Schritt nach vorne (in
+      Blickrichtung) aus. Falls sich unter ihm eine Münze befindet, so hebt er diese auf.
+      Ansonsten legt er eine Münze ab (Erweiterung: Sofern er mindestens eine Münze besitzt).
+
+      \lstinputlisting[style=Java]{codes/V4_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{1}{3}]{Variablen}
+    Legen Sie eine Variable \inlinejava{int a} an und setzen Sie ihren Wert auf \inlinejava{127}.
+    Jetzt legen Sie eine weitere Variable \inlinejava{int b} an und setzen Ihren Wert auf
+    \inlinejava{42}. Was gibt nun der Ausdruck \inlinejava{int c = a \% b} wieder? Beschreiben
+    Sie in Ihren eigenen Worten, welche Berechnung mit dem \inlinejava{\%} Operator durchgeführt
+    wird.
+
+    \begin{solution}
+      Der Ausdruck gibt 1 zurück, also den Rest der ganzzahligen Division von \inlinejava{a} und
+      \inlinejava{b}. Beim \inlinejava{\%} handelt sich um den Modulo-Operator, welcher den Rest
+      einer ganzzahligen Division zurückgibt.
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{1}{3}]{Bedingungen II}
+    Ihr Kommilitone ist etwas tippfaul und lässt deswegen gerne einmal Klammern weg, um sich
+    Arbeit zu sparen. Er hat in seinem Code eine Variable \inlinejava{int number} angelegt, in
+    der er eine Zahl speichert. Ist diese Zahl kleiner als \inlinejava{0}, so möchte er das
+    Vorzeichen der Zahl umdrehen und sie anschließend um \inlinejava{1} erhöhen. Ist die Zahl
+    hingegen größer als \inlinejava{0}, so möchte er die Zahl verdoppeln. Dazu schreibt er
+    folgenden Code:
+
+    \lstinputlisting[style=Java]{codes/V6_01_Task.java}
+
+    Kann der Code so ausgeführt werden? Beschreiben Sie den Fehler, den ihr Kommilitone begangen
+    hat.
+
+    \br
+
+    Nachdem Sie ihren Kommilitonen auf den obigen Fehler hingewiesen haben, überarbeitet er
+    seinen Versuch. Wie sieht es mit folgender Variante aus?
+
+    \lstinputlisting[style=Java]{codes/V6_02_Task.java}
+
+    Da müssen Sie wohl selbst ran. Erstellen Sie ein Codestück, um den Sachverhalt korrekt zu
+    implementieren.
+
+    \begin{solution}
+      \begin{enumerate}
+        \item Zwischen einer \inlinejava{if}- und \inlinejava{else}-Anweisung darf keine
+        weitere Anweisung nach der Ersten zwischen dem \inlinejava{if} und
+        \inlinejava{else} stehen. Der Komilitone müsste die erste und zweite Anweisung nach dem
+        \inlinejava{if} in Klammern schreiben.
+        \item Hier fehlen die Klammern bei der zweiten Anweisung nach dem \inlinejava{if}, da der
+        \inlinejava{counter} ansonsten immer um \inlinejava{1} inkrementiert wird.
+
+        \br
+
+        Der verbesserte Code lautet:
+      \end{enumerate}
+
+      \lstinputlisting[style=Java]{codes/V6_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Schleifen I}
+    Schreiben Sie den folgenden Ausdruck mithilfe einer \inlinejava{for}-Schleife:
+
+    \lstinputlisting[style=Java]{codes/V7_Task.java}
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V7_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{1}{3}]{Schleifen II}
+    Ihr klammerfauler Kommilitone hat auch diesmal wieder zugeschlagen und versucht den Code aus
+    vorheriger Aufgabe kürzer zu schreiben. Was sagen Sie dazu?
+
+    \lstinputlisting[style=Java]{codes/V8_Task.java}
+
+    \begin{solution}
+      Der Roboter würde in diesem Falle unendlich weiterlaufen, da die Inkrementation der
+      Variable \inlinejava{i} außerhalb der \inlinejava{while}-Schleife ist.
+
+      \begin{note}[title=Information:]
+        Inkrementation stammt aus dem lateinischen Wort \enquote{incrementare} (deutsch:
+        vergrößern) und beschreibt im Bezug zum oberen Codeauschnitt die schrittweise
+        Vergrößerung einer Variable.
+      \end{note}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{2}{3}]{Anzahl an Umdrehungen}
+    Legen Sie eine Variable \inlinejava{int numberOfTurns} an und setzen Sie ihren Wert zu Beginn
+    auf \inlinejava{0}. Erstellen Sie dann einen neuen Roboter und platzieren Sie ihn an der
+    Stelle \inlinejava{(8,2)}. Er schaut dabei nach links und besitzt keine Coins. Lassen Sie den
+    Roboter nun geradewegs auf die Stelle \inlinejava{(0,2)} zusteuern und alle Coins auf seinem
+    Weg aufsammeln. Liegen mehrere Coins auf einer Stelle, so soll er alle Coins aufsammeln. Bei
+    jedem Aufsammeln, erhöhen Sie den Wert von \inlinejava{numberOfTurns} um \inlinejava{1}. Hat
+    er am Ende die Stelle \inlinejava{(0,2)} erreicht, soll er sich
+    \inlinejava{numberOfTurns}-mal nach links drehen.
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V9_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{2}{3}]{Vorsicht Wand!}
+    Gehen Sie in dieser Aufgabe davon aus, dass Sie einen Roboter \inlinejava{wally} an der
+    Position \inlinejava{(0, 0)} erstellt haben und er nach rechts schaut. An der Position
+    \inlinejava{(0, 0)} befindet sich eine vertikale Wand die den Weg nach \inlinejava{(x + 1, 0)}
+    versperrt, die \inlinejava{x}-Koordinate ist allerdings unbekannt. Schreiben Sie ein
+    kleines Programm, mit dem Sie den Roboter bis vor die Wand laufen lassen, direkt vor der Wand
+    einen Coin ablegen, um dann wieder an die Ausgangsposition \inlinejava{(0,0)} zurückzukehren.
+
+    \begin{note}[title=Hinweis:, color=tuda-orange]
+      Es gibt die Funktion \inlinejava{isFrontClear()}, mit der getestet werden kann, ob sich in
+      Blickrichtung des Roboters vor ihm direkt eine Wand befindet.
+    \end{note}
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V10_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \clearpage
+
+  \begin{task}[credit=\stars{2}{3}]{Codeverständnis}
+    Beschreiben Sie ausführlich, welches Verhalten der nachfolgende Code umsetzt. Bei Fragen zur
+    Funktionalität einzelner Methoden, werfen Sie einen Blick in die entsprechenden
+    Vorlesungsfolien.
+
+    \lstinputlisting[style=Java]{codes/V11_Task.java}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V11_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{3}{3}]{Navigator}
+    Gegeben seien vier Variablen:
+
+    \begin{minipage}{0.475\textwidth}
+      \begin{flushright}
+        \inlinejava{int startX}
+
+        \br
+
+        \inlinejava{int destinationX}
+      \end{flushright}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.475\textwidth}
+      \inlinejava{int startY}
+
+      \br
+
+      \inlinejava{int destinationY}
+    \end{minipage}
+
+    \br
+
+    Ihr Roboter befindet sich zu Beginn an der Position \inlinejava{(startX, startY)} und schaut
+    in eine beliebige Richtung. Schreiben Sie ein Programm, das ihn von dieser Position auf die
+    Position \inlinejava{(destinationX, destinationY)} laufen lässt.
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V12_Solution.java}
+    \end{solution}
+  \end{task}
+\end{document}

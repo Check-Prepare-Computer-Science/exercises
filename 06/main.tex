@@ -1,0 +1,334 @@
+\documentclass{../tuda-exercise}
+
+% Title information
+\version{20. November 2021}
+\sheetnumber{6}
+
+\begin{document}
+
+  \maketitle
+
+  \begin{task}[credit=\stars{0}{3}]{Theoriefragen}
+    Erklären Sie kurz in eigenen Worten die folgenden Konzepte:
+
+    \begin{enumerate}
+      \item Was sind Funktionen höherer Ordnung? Wo liegen ihre Vorteile?
+      \item Was ist ein Lambda-Ausdruck?
+      \item Wieso sollte man Abstraktion beim Programmieren verwenden?
+    \end{enumerate}
+
+    \begin{solution}
+      \begin{enumerate}
+        \item Funktionen höherer Ordnung sind Funktionen, die als Parameter eine Funktion
+        erhalten und oder eine Funktion als Rückgabewert haben. Ihre Vorteile liegen darin, dass
+        sie ihre eigene Funktion anhand des Parameters anpassen (größere Abstraktion) oder
+        Funktionen anhand bestimmter Parameter erstellen können. Durch die Abstraktion ergibt
+        sich eine breitere Verwendungsmöglichkeit, d.h. eine Anpassbarkeit an eine Vielzahl
+        gleichartiger Aufgaben.
+        \item Lambda-Ausdrücke sind Literale von Funktionstypen und haben daher, wie Literale
+        anderer Typen erst einmal keinen Namen (anonyme Funktion), solange man sie nicht einer
+        Variablen/Konstanten zuweist.
+
+        \br
+
+        In Bezug auf Java kann man sich einen Lambda-Ausdruck folgendermaßen vorstellen: Ein
+        Lambda-Ausdruck ist eine anonyme Funktion, welche nur durch Referenzen und Verweise
+        angesprochen werden kann, aber nicht über einen Bezeichner.
+        \item Durch das Unterteilen in Unterklassen und Methoden muss bei gleichartigen Aufgaben
+        nicht bei jeder dieser Aufgabe alles von Grund auf neu programmiert werden, sondern es
+        wird das Gemeinsame in eine einzige Entität (Klasse, Interface oder Methode in Java;
+        Funktion in Racket) heraus faktorisiert. Es müssen also nur noch die spezifischen Aspekte
+        bei jeder Aufgabe neu implementiert werden. Durch dieses Unterteilen können dann auch in
+        Zukunft zusätzlich Aufgaben von einem ähnlichen Typ gelöst werden, die heute noch gar nicht
+        bekannt sind. Der Hauptvorteil ist, dass man Wiederholungen vermeidet, was nicht nur
+        aufwändig, sondern auch fehleranfällig ist. Ein weiterer Vorteil ist, dass man mit etwas
+        Übung in abstraktem Denken einen solchen Code besser versteht und ihn daher auch besser
+        weiter pflegen kann.
+      \end{enumerate}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Ausdrücke mit Funktionen höherer Ordnung}
+    In der Vorlesung haben Sie die Funktionen \inlineracket{my-map}, \inlineracket{my-filter} und
+    \inlineracket{my-fold} kennengelernt und diese selbst implementiert. Alle drei Funktionen
+    gibt es mit identischer Funktionalität bereits vordefiniert in DrRacket und haben die Namen
+    \inlineracket{map}, \inlineracket{filter} und
+    \inlineracket{foldr}.
+
+    \br
+
+    Was liefern die folgenden Ausdrücke zurück? Arbeiten Sie hier ausschließlich mit Stift und
+    Papier und verwenden Sie DrRacket erst hinterher, nur zur Überprüfung Ihrer Ergebnisse.
+
+    \begin{enumerate}
+      \item \inlineracket{(map + (list 1 2 3) (list 4 5 6))}
+      \item \inlineracket{(filter positive? (list 1 -2 3 4 -5))}
+      \item \inlineracket{(foldr + 0 (list 5 -9 3 2 5 6))}
+      \item \inlineracket{(filter string? (list 1 2} \code{\textcolor{stringcolor}{"'3"' "'4"'})}
+      \item \inlineracket{(first (map list (list}  \code{\textcolor{stringcolor}{"'x"' "'y"'
+      "'z"'})))}
+      \item \inlineracket{(map list (list}  \code{\textcolor{stringcolor}{"'a"' "'b"' "'c"'})}
+      \inlineracket{(list 1 2 3) (list true false true))}
+      \item \inlineracket{(foldr cons (list -10 -1) (list 1 10 100 1000))}
+    \end{enumerate}
+
+    \begin{solution}
+      \begin{enumerate}
+        \item \inlineracket{(list 5 7 9)}
+        \item \inlineracket{(list 1 3 4)}
+        \item \inlineracket{12}
+        \item \inlineracket{(list}  \code{\textcolor{stringcolor}{"'3"' "'abc"'})}
+        \item \inlineracket{(list}  \code{\textcolor{stringcolor}{"'x"''})}
+        \item \inlineracket{list (list}  \code{\textcolor{stringcolor}{"'a"'}} \inlineracket{1
+        true)}
+        \code{\textcolor{stringcolor}{"'b"'}} \inlineracket{2 false)}
+        \code{\textcolor{stringcolor}{"'c"'}}
+        \inlineracket{3 true)}
+        \item \inlineracket{(list 1 10 100 1000 -10 -1)}
+      \end{enumerate}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Funktionen höherer Ordnung verwenden}
+    Definieren Sie die folgenden Funktionen. Außerhalb der Funktionen \inlineracket{map},
+    \inlineracket{filter} und \inlineracket{foldr} darf keine Rekursion verwendet werden.
+    \begin{itemize}
+      \item Eine Funktion \inlineracket{zip}, die aus zwei gleich langen Listen eine Liste von
+      geordneten Paaren macht. Beispiel:
+      \\
+      \inlineracket{(zip (list}  \code{\textcolor{stringcolor}{"'a"' "'b"'})} \inlineracket{(list
+      1 2))}
+      \(\rightarrow\)  \inlineracket{(list (list)} \code{\textcolor{stringcolor}{"'a"'}}
+      \inlineracket{1) (list} \code{\textcolor{stringcolor}{"'b"'}} \inlineracket{2))}
+      \item Eine Funktion \inlineracket{vec-mult}, die zwei gleich lange Listen von Zahlen erhält
+      und das Skalarprodukt, also die Summe der paarweisen Produkte berechnet. Beispiel:
+      \\
+      \inlineracket{(vec-mult (list 1 2 3) (list 4 5 6))} \(\rightarrow\) \inlineracket{(+ (* 1
+      4)(* 2 5)(* 3 6))} \(\rightarrow\) \inlineracket{32}
+    \end{itemize}
+
+    \begin{solution}
+      \begin{itemize}
+        \item \inlineracket{zip}
+        \lstinputlisting[style=Racket]{codes/V3_01_Solution.rkt}
+        \item \inlineracket{vec-mult}
+        \lstinputlisting[style=Racket]{codes/V3_02_Solution.rkt}
+      \end{itemize}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Lambda-Ausdrücke}
+    \lstinputlisting[style=Racket]{codes/V4_Task.rkt}
+
+    Ergänzen Sie den Vertrag, sowohl für die Funktion \inlineracket{z}, als auch für den
+    Lambda-Ausdruck. Was liefert \inlineracket{((z 3) 4)} zurück
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V4_Solution.rkt}
+
+      Das Ergebnis von \inlineracket{((z 3) 4)} ist \inlineracket{12}.
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{2}{3}]{Foo Reloaded I}
+    \label{task:V5}
+    Erinnern Sie sich noch an die Funktion \inlineracket{foo} aus Aufgabe V7 vom letzten
+    Übungsblatt? Zur Erinnerung: Gegeben ist ein Struct-Typ \inlineracket{abc} mit zwei Feldern
+    \inlineracket{a} und \inlineracket{b}. Die Funktion \inlineracket{foo} bekommt einen
+    Parameter \inlineracket{p} und liefert falls \inlineracket{p} vom Typ \inlineracket{abc} und
+    zudem der Wert im Feld \inlineracket{b} von \inlineracket{p} eine Liste ist eine Liste
+    zurück, deren erstes Element der Wert von Feld \inlineracket{a} in \inlineracket{p} ist, und
+    der Rest der zurückgelieferten Liste ist die Liste im Feld \inlineracket{b} von
+    \inlineracket{p} (also eine Liste in der Liste). Andernfalls liefert \inlineracket{foo}
+    einfach \inlineracket{false} zurück.
+
+    \br
+
+    Definieren Sie nun eine Funktion \inlineracket{bar1}, die einen Parameter \inlineracket{lst}
+    übergeben bekommt. Für jedes Element \inlineracket{x} in \inlineracket{lst}, das vom Typ
+    \inlineracket{abc} ist, soll die Ergebnisliste von \inlineracket{bar1} das Ergebnis der
+    Anwendung von \inlineracket{foo} auf \inlineracket{x} enthalten. Weitere Elemente darf die
+    Ergebnisliste von \inlineracket{bar1} nicht enthalten.
+
+    \br
+
+    \begin{note}[title=Verbindliche Anforderung:, color=tuda-orange]
+      Sie dürfen in dieser Aufgabe noch keine Funktionen höherer Ordnung wie \inlineracket{map} oder
+      \inlineracket{filter} verwenden. Diese Funktionalitäten müssen von Ihnen selbst
+      implementiert werden.
+    \end{note}
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V5_Solution.rkt}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{2}{3}]{Foo Reloaded II}
+    Definieren Sie nun eine Funktion \inlineracket{bar2}. Diese besitzt die gleiche
+    Funktionalität wie \inlineracket{bar1} aus Aufgabe \hyperref[task:V5]{V5}. In dieser Aufgabe
+    wird die Funktionalität allerdings nicht mehr selbstgeschrieben, sondern an die
+    vordefinierten Funktionen \inlineracket{map} und \inlineracket{filter} delegiert. Nutzen Sie
+    Lambda-Ausdrücke, welche Sie innerhalb der Aufrufe von \inlineracket{map} und
+    \inlineracket{filter} definieren.
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V6_Solution.rkt}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{2}{3}]{Kartesisches Produkt}
+    Definieren Sie eine Funktion \inlineracket{cartesian-prod}, die zwei Zahlenlisten erhält und das
+    \href{https://de.wikipedia.org/wiki/Kartesisches_Produkt}{kartesische Produkt} der beiden bildet. Beispiel:
+    \newline
+    \inlineracket{(cartesian-prod (list 1 2) (list 3 4))} \(\rightarrow\)
+    \inlineracket{(list (list 1 3) (list 1 4) (list 2 3) (list 2 4))}
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V7_Solution.rkt}
+    \end{solution}
+  \end{task}
+
+  \clearpage
+
+  \begin{task}[credit=\stars{3}{3}]{Bibliothek Leihgebühren}
+    Eine Bibliothek verwaltet ihr Leihsystem nun in Racket. Dazu wird ein neuer Struct-Typ
+    \inlineracket{br} definiert.
+
+    \lstinputlisting[style=Racket]{codes/V8_Task.rkt}
+
+    Das Feld \inlineracket{id} ist dabei ein String und stellt die ID-Nummer des ausgeliehenen
+    Buches dar. Das Feld \inlineracket{pop} ist eine Zahl zwischen 1 bis 6 und gibt die
+    Beliebtheit des Buches an (je größer die Zahl, desto beliebter das Buch). Das letzte Feld
+    \inlineracket{type} ist wieder ein String, der entweder
+    \code{\textcolor{stringcolor}{"'Single"'}} oder \code{\textcolor{stringcolor}{"'Subscription"'}}
+    sein kann, je nachdem, ob es sich um eine einmalige Ausleihe oder einen Abonnenten handelt.
+
+    \br
+
+    Folgende Regeln gelten in der Bibliothek: Abonnenten zahlen für jedes ausgeliehene Buch
+    pauschal 1,50€. Bei normalen Kunden berechnet sich der Preis über die Beliebtheit des Buches.
+    Pro Beliebtheitsstufe kostet das Buch 1,75€. Somit kostet ein Buch mit Beliebtheitsstufe 3
+    beispielsweise 5,25€.
+
+    \br
+
+    Ihre Aufgabe ist es nun eine Funktion \inlineracket{fee-total} zu definieren. Diese enthält
+    eine Liste von \inlineracket{br}-Structs (die Ausleihliste) und gibt die Gesamteinnahmen aus
+    eben dieser Ausleihliste zurück.
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V8_Solution.rkt}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{3}{3}]{Wer bekommt die Zulassung?}
+    Schreiben Sie eine Prozedur zur Prüfung der Zuteilung einer Studienleistung im Modul X. Dort
+    sind 50 Hausaufgaben-, 35 Zwischenklausur- und 50 Projektpunkte sowie insgesamt mindestens
+    180 Punkte aus den drei Bereichen zusammen erforderlich. Definieren Sie dazu eine Funktion
+    \inlineracket{passed} mit folgender Signatur
+
+    \br
+
+    \inlineracket{(list} of \inlineracket{number)} \inlineracket{(list} of \inlineracket{(list} of
+    \inlineracket{number number number))} \(\rightarrow\) \inlineracket{(list} of \inlineracket{number)}
+
+    \br
+
+    Diese Funktion erhält aus Datenschutzgründen separat die Liste der Matrikelnummern sowie eine
+    Liste von Listen mit Punkten für Hausaufgaben, Zwischenklausur und Projekt (in dieser
+    Reihenfolge). Die Precondition ist dabei, dass die Listen gleich lang sind und dass die
+    Matrikelnummer an Position \inlineracket{i} der ersten Liste zu den Punkten an Position
+    \inlineracket{i} der zweiten Liste gehört (vergessen Sie die Precondition nicht im Vertrag
+    der Funktion). Die Ergebnisliste enthält die Matrikelnummern aller Studierenden, die die
+    Bedingungen für die Studienleistung erfüllt haben. Die Reihenfolge der Studierenden soll
+    dabei erhalten bleiben.
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V9_Solution.rkt}
+    \end{solution}
+  \end{task}
+
+  \clearpage
+
+  \begin{task}[credit=\stars{3}{3}]{Bildverarbeitung in Racket}
+    Um diese Aufgaben in DrRacket ausführen zu können, setzen Sie bitte \inlineracket{(require
+    2htdp/image)} in die oberste Zeile Ihrer Datei ein.
+
+    \br
+
+    Bilder bestehen aus vielen aufeinanderfolgenden Pixeln. Jedes Pixel nimmt dabei genau die
+    Farbe an, die durch sein sogenanntes RGB-Tripel beschrieben werden. Dies ist durch die
+    Darstellung im sogenannten \href{https://de.wikipedia.org/wiki/RGB-Farbraum}{RGB-Farbraum},
+    ein sogenannter technischer Farbraum, der die Farbwahrnehmung durch das additive Mischen der
+    drei Grundfarben nachbildet, begründet. Jede Farbe lässt sich dabei durch ein Tripel \textit{
+      (R, G, B)} darstellen, wobei die drei Zahlen jeweils den Anteil der jeweiligen Grundfarbe
+    angeben. So ist das klassische rot durch \((255,0,0)\), gelb als Mischung zweier Grundfarben
+    durch \((255,255,0)\) und braun als Mischung aller Grundfarben als \((153,102,51)\) dargestellt.
+
+    \br
+
+    Der Einfachheit wegen benutzen wir nur Bilder im PNG-Format (d.h. Dateiendung \inlineracket{
+      .png}), die keine transparenten Farben enthalten,  also keinen Alphakanal besitzen. Ein
+    Bild ist in Racket immer ein Struct vom Typ
+    \inlineracket{image}. Jedes Bild besteht aus seinen aufeinanderfolgenden Pixeln. In Racket
+    ist ein Pixel als \inlineracket{color}-Struct definiert
+
+    \lstinputlisting[style=Racket]{codes/V10_Task.rkt}
+
+    Die ersten drei Felder sind das Tripel des RGB-Farbraums und liegen zwischen \(0\) und \(255\).
+    Den Alpha-Wert(Siehe Transparenz, Kapitel 02 der Vorlesung) ignorieren wir in dieser Übung,
+    er soll immer auf \(255\) gesetzt werden. Folgende Funktionen gibt es bereits für die
+    Bildverarbeitung in Racket:
+
+    \begin{itemize}
+      \item Um aus einem \inlineracket{image} die entsprechenden \inlineracket{color}-Structs zu
+      bekommen, gibt es die Funktion
+      \\
+      \inlineracket{(image->color-list img)}.
+      \\
+      Diese gibt eine Liste von \inlineracket{color}-Structs für das übergebene Bild zurück.
+      \item Um aus einer Liste von \inlineracket{color}-Structs ein Bild zu generieren gibt es
+      die Funktion
+      \inlineracket{(color-list->bitmap clr-lst width height)}. Diese benötigt neben der Liste von
+      \inlineracket{color}-Structs auch die Breite und Höhe des zu generierenden Bildes (über die
+      Funktionen \inlineracket{(image-width img)} und \inlineracket{(image-height img)} abrufbar).
+      \item Mit \code{(bitmap/file \textcolor{stringcolor}{"'image.png"')}} laden Sie das Bild im
+      PNG-Format namens \textcolor{stringcolor}{"'image"'}, welches im gleichen Verzeichnis wie
+      die \inlineracket{.rkt} Datei liegt. Mittels \code{(save-image img "' out.png"')} speichern
+      Sie ein \inlineracket{image}-Struct unter dem Namen \code{\textcolor{stringcolor}{"'out"'}}
+      dort.
+    \end{itemize}
+
+    Nutzen Sie für die folgenden beiden Aufgaben Funktionen höherer Ordnung
+
+    \begin{enumerate}
+      \item Definieren Sie eine Funktion \inlineracket{(count-black-white img)}. Diese bekommt
+      ein Bild übergeben, welches nur aus schwarzen \((0,0,0)\) und weißen Pixeln \((255,255,255)\)
+      besteht. Zurückgegeben werden soll eine zweielementige Liste, welche an erster Position
+      die Anzahl an schwarzen und an zweiter Position die Anzahl an weißen Pixeln enthält.
+      \item Definieren Sie eine Funktion \inlineracket{(negative-transformation img)}. Diese
+      bekommt ein Bild als \inlineracket{image}-Struct übergeben und gibt die
+      Negativtransformation dieses Bildes zurück. Dazu berechnen Sie die RGB-Werte für jeden
+      Pixel neu über den folgenden Zusammenhang:
+      \((R_{\text{neg}}, G_{\text{neg}}, B_{\text{neg}}) = (255 - R, 255 - G, 255 - B)\)
+    \end{enumerate}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Racket]{codes/V10_Solution.rkt}
+    \end{solution}
+  \end{task}
+\end{document}

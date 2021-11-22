@@ -1,0 +1,185 @@
+\documentclass{../tuda-exercise}
+
+% Title information
+\version{20. November 2021}
+\sheetnumber{0}
+
+% Fix url underfull hbox
+\Urlmuskip=0mu plus 10mu
+
+\setcounter{task}{-1}
+
+\begin{document}
+
+  \maketitle
+
+  \begin{note}[title=Information:]
+    Dieses Übungsblatt legt den Grundstein für alle weiteren Java Übungsblätter. Von Ihnen wird
+    erwartet, dass Sie sich intensiv mit dem Blatt beschäftigen, da wir alle hier beschriebenen
+    Formalitäten auf allen weiteren Übungsblättern als gegeben voraussetzen.
+  \end{note}
+
+  \begin{task}{Ist Eclipse starbereit?}
+    Importieren Sie die Vorlage \inlinejava{V00} aus Moodle und führen Sie die Klasse
+    \inlinejava{EclipseReady.java} aus. Wenn Sie alles korrekt installiert haben, wird Ihnen in
+    der Konsole unten Ihre installierte Java Version ausgegeben. Achten Sie darauf, dass hier
+    die Version 11 in Verbindung mit AdoptOpenJDK ausgegeben wird.
+
+    Die Ausgabe der Konsole kann folgendermaßen aussehen:
+
+    \begin{note}[color=tuda-gray]
+      java.home = C:\(\backslash\)Program Files\(\backslash\)Eclipse Foundation\(\backslash\)jdk-11.0.12.7-hotspot
+
+      java.version = 11.0.12
+
+      java.runtime.version = 11.0.12+7
+    \end{note}
+  \end{task}
+
+  \clearpage
+
+  \begin{task}[credit=\stars{1}{3}]{Erste Schritte mit FopBot}
+    Öffnen Sie nun die Klasse \inlinejava{FirstStepsBot.java}. Dort finden Sie eine Stelle,
+    welche mit \inlinejava{TODO} gekennzeichnet ist. Fügen Sie hier Ihren Code ein, der folgendes
+    umsetzt:
+
+    \begin{enumerate}
+      \item Erstellen Sie einen Roboter namens \inlinejava{alice},  der auf der Position (4,4)
+      steht und nach rechts blickt. Er hat zu Beginn drei Coins in seiner Tasche.
+      \item Lassen Sie \inlinejava{alice} nun zwei Schritte nach vorne laufen.
+      \item Drehen Sie \inlinejava{alice} nun so, dass er nach oben blickt.
+      \item Lassen Sie \inlinejava{alice} einen Schritt nach vorne laufen.
+      \item Legen Sie einen Coin von \inlinejava{alice} ab.
+      \item Lassen Sie \inlinejava{alice} zwei Schritte nach vorne laufen.
+      \item Legen Sie zwei Coins mit \inlinejava{alice} ab.
+      \item Drehen Sie \inlinejava{alice} nun so, dass er nach links blickt.
+      \item Lassen Sie \inlinejava{alice} zwei Schritte nach vorne laufen.
+      \item Lassen Sie \inlinejava{alice} den Coin aufheben.
+      \item Lassen Sie \inlinejava{alice} einen Schritt nach vorne laufen.
+    \end{enumerate}
+
+    \br
+
+    \begin{note}[title=Hinweis:, color=tuda-orange]
+      Sie können durch den folgenden Verweisen mehr über die Funktionsweise von FopBot erfahren:
+
+      \begin{itemize}
+        \item Sourcecode: \url{https://github.com/FOP-2022/FOPBot}
+        \item Dokumentation: \url{https://fop-2022.github.io/FOPBot/fopbot/package-summary.html}
+      \end{itemize}
+
+      Um mögliche Verständnisprobleme zu klären kann sich auch ein Blick in die Dokumentation und
+      den Sourcecode lohnen.
+    \end{note}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V4_Solution.java}
+
+      \begin{note}[title=Information:]
+        Die \inlinejava{Direction} eines FopBot wird mithilfe von einer Enumeration umgesetzt.
+        Zugriff auf die jeweiligen Richtungen erhält man durch \inlinejava{Direction.X}, wobei
+        für \inlinejava{X} jeweils \inlinejava{UP}, \inlinejava{DOWN}, \inlinejava{LEFT} und
+        \inlinejava{RIGHT} eingesetzt werden kann. Damit man nicht jedes Mal
+        \inlinejava{Direction} schreiben muss, kann man folgendes importieren:
+
+        \begin{center}
+          \inlinejava{import static fopbot.Direction.*;}
+        \end{center}
+
+        Mehr Information dazu kann mithilfe des folgenden Verweises gefunden werden:
+
+        \begin{itemize}
+          \item \url{https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html}
+        \end{itemize}
+      \end{note}
+    \end{solution}
+  \end{task}
+
+  \clearpage
+
+  \begin{task}[credit=\stars{2}{3}]{Quadrat}
+    Öffnen Sie nun die \inlinejava{KlasseSquare.java}. Dort finden Sie eine Stelle, welche mit
+    \inlinejava{TODO} gekennzeichnet ist. Fügen Sie hier Ihren Code ein, der folgendes umsetzt:
+
+    \br
+
+    Zu Beginn platzieren Sie zwei Roboter in der Welt, von denen beide \inlinejava{20} Coins
+    besitzen. Der erste Roboter befindet sich in Position \inlinejava{(0,0)} und blickt nach
+    rechts, der andere befindet sich in Position \inlinejava{(9, 9)} und blickt nach links. Ihre
+    Aufgabe ist es nun, ein (nicht ausgefülltes) Quadrat mithilfe der beiden Roboter, durch
+    abgelegen von Coins, zu zeichnen. Dabei soll sich am Ende des Programms jeder Roboter im
+    Startpunkt des jeweils anderen befinden. In Abbildung \ref{fig:V5} finden Sie einen
+    Vorher-Nachher-Vergleich dieser Situation.
+
+    \begin{figure}[h]
+      \centering
+      \scalebox{0.6}{
+        \begin{FOPBotWorld}{10}{10}
+          \path (0,0) pic[rotate=180] {Trianglebot};
+          \path (9,9) pic {Trianglebot};
+        \end{FOPBotWorld}
+        \hspace*{-2.25cm}
+        \begin{FOPBotWorld}{10}{10}
+          \foreach \x/\y in {
+              {0/0},
+              {0/1},
+              {0/2},
+              {0/3},
+              {0/4},
+              {0/5},
+              {0/6},
+              {0/7},
+              {0/8},
+              {0/9},
+              {9/0},
+              {9/1},
+              {9/2},
+              {9/3},
+              {9/4},
+              {9/5},
+              {9/6},
+              {9/7},
+              {9/8},
+              {9/9},
+              {1/0},
+              {2/0},
+              {3/0},
+              {4/0},
+              {5/0},
+              {6/0},
+              {7/0},
+              {8/0},
+              {1/9},
+              {2/9},
+              {3/9},
+              {4/9},
+              {5/9},
+              {6/9},
+              {7/9},
+              {8/9},
+          }{
+            \putcoin{\x}{\y}{1}
+          }
+          \path (0,0) pic[rotate=270] {Trianglebot};
+          \path (9,9) pic[rotate=90] {Trianglebot};
+        \end{FOPBotWorld}
+      }
+      \caption{Vorher-Nachher-Vergleich}
+      \label{fig:V5}
+    \end{figure}
+
+    \begin{note}[title=Verbindliche Anforderung:, color=tuda-orange]
+      Das Laufen und Ablegen von Coins darf nur innerhalb einer Schleife umgesetzt werden, in der
+      in jedem Durchlauf jeder der Roboter genau einen Coin ablegt! Lediglich das Drehen der
+      Roboter darf außerhalb einer Schleife geschehen.
+    \end{note}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V5_Solution.java}
+    \end{solution}
+  \end{task}
+\end{document}

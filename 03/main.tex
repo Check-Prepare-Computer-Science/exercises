@@ -1,0 +1,382 @@
+\documentclass{../tuda-exercise}
+
+% Title information
+\version{20. November 2021}
+\sheetnumber{3}
+
+\begin{document}
+
+  \maketitle
+
+  \begin{note}[title=Dokumentation in Java:, color=tuda-red]
+    Mittels JavaDoc und den Tags \textcolor{commentcolor}{@param} und
+    \textcolor{commentcolor}{@return} wollen wir nun im Java-Teil eine geeignete Dokumentation
+    unserer Methoden vornehmen. Das JavaDoc können Sie automatisch vor jeder Methode mittels
+    \textcolor{commentcolor}{/**} in einer integrierten Entwicklungsumgebung generieren, wenn Sie
+    danach Enter drücken. Ein Beispiel wäre:
+
+    \lstinputlisting[style=Java]{codes/javadoc.java}
+  \end{note}
+
+  \begin{task}[credit=\stars{1}{3}]{Die Würfel sind gefallen!}
+    Mit der Funktion \inlinejava{Math.random()} können Sie eine Zufallszahl im Bereich
+    \inlinejava{0} (inklusive) und \inlinejava{1} (exklusive) erzeugen. Schreiben Sie nun eine
+    Methode \inlinejava{void diceRoll()}.
+
+    \br
+
+    Diese soll einen Würfelwurf simulieren und die gewürfelte Augenzahl auf der Konsole
+    zurückgeben. Dabei soll der Würfel fair sein, das heißt alle Augenzahlen sollen mit
+    identischer Wahrscheinlichkeit auftreten.
+
+    \br
+
+    \begin{note}[title=Hinweis, color=tuda-orange]
+      Überlegen Sie sich, wie Sie die erzeugten Zahlen aus dem Intervall \([0,1)\) auf die
+      diskrete Menge \(\{1, 2, 3, 4, 5, 6\}\) abbilden können. Mit der Funktion
+      \inlinejava{Math.ceil()} können Sie zur nächst größeren, ganzen Zahl aufrunden.
+    \end{note}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V1_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \clearpagenosolution
+
+  \begin{task}[credit=\stars{1}{3}]{Schleifen}
+    \lstinputlisting[style=Java]{codes/V2_Task.java}
+
+    \begin{enumerate}
+      [label=(\arabic*)]
+      \item Welche Funktion erfüllt der oben stehende Code?
+      \item Ersetzen Sie die \inlinejava{while}-Schleife einmal durch eine \inlinejava{for}- und
+      einmal durch eine \inlinejava{do}-\inlinejava{while}-Schleife, und zwar so, dass weiterhin
+      die gleichen Schritte ausgeführt werden.
+    \end{enumerate}
+
+    \begin{solution}
+      \begin{enumerate}
+        [label=(\arabic*)]
+        \item Die Methode gibt die nächstgrößere Quadratzahl zu der Zahl \inlinejava{1000} zurück.
+        Also die Zahl \inlinejava{x}, sodass \(x^2 > 1000\)
+        \item \noindent
+        \lstinputlisting[style=Java]{codes/V2_01_Solution.java}
+        \lstinputlisting[style=Java]{codes/V2_02_Solution.java}
+      \end{enumerate}
+
+      \begin{note}[title=Information:]
+        Der Körper einer \inlinejava{do}-\inlinejava{while}-Schleife wird immer mindestens einmal
+        ausgeführt, egal ob die Bedingung gültig ist oder nicht. Bei einer
+        \inlinejava{while}-Schleife wird der Körper erst betreten, wenn die Bedingung gültig
+        (also \inlinejava{true}) ist und es kann sein, dass der Körper kein einziges Mal
+        ausgeführt wird.
+      \end{note}
+    \end{solution}
+  \end{task}
+
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Interfaces}
+    Schreiben Sie ein Interface \inlinejava{I1} mit einer parameterlosen
+    \inlinejava{void}-Methode \inlinejava{m1}. Nun schreiben Sie ein Interface \inlinejava{I2},
+    das von \inlinejava{I1} erbt. \inlinejava{I2} hat eine zusätzliche \inlinejava{void}-Methode
+    \inlinejava{m2} mit einem \textcolor{keywordcolor}{int}-Parameter \inlinejava{i}.
+    Abschließend schreiben Sie eine Klasse \inlinejava{C1}, die das Interface \inlinejava{I2}
+    implementiert. Die Klasse hat ein \inlinejava{int}-Attribut \inlinejava{number}. Beim Aufruf
+    der Methode \inlinejava{m1} soll \inlinejava{number} auf \inlinejava{-1} gesetzt werden. Wird
+    Methode \inlinejava{m2} aufgerufen, so soll \inlinejava{number} auf den übergebenen Wert
+    gesetzt werden.
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V3_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Geometrische Formen I}
+    Gegeben seien folgende zwei Klassen:
+
+    \lstinputlisting[style=Java]{codes/V4_Task.java}
+
+    Schreiben Sie zunächst ein Interface \inlinejava{ComputeArea} mit einer parameterlosen
+    \inlinejava{double}-Methode \inlinejava{computeArea}. Erweitern Sie nun die zwei oben
+    genannten Klassen, sodass beide das Interface \inlinejava{ComputeArea} implementieren. Die
+    Methode \inlinejava{computeArea} soll den Flächeninhalt des Kreises bzw. des Rechtecks
+    berechnen und zurückliefern.
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V4_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{1}{3}]{Geometrische Formen II}
+    Schreiben Sie eine Methode \inlinejava{double computeTotalArea} mit zwei Parametern
+    \inlinejava{Circle[] circle} und \inlinejava{Rectangle[] rectangles}. Die Methode summiert
+    die Flächeninhalte aller übergebenen geometrischen Formen in den beiden Arrays auf und gibt
+    diese Summe zurück.
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V5_Solution.java}
+
+      \begin{note}[title=Information:]
+        Alternativ zur foreach-Schleife, kann man eine gewöhnliche \inlinejava{for}-Schleife
+        verwenden:
+
+        \lstinputlisting[style=Java]{codes/V5_Solution_Alternative.java}
+      \end{note}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{2}{3}]{Spieglein, Spieglein \dots}
+    Wir nennen eine Gruppe von Elementen in einem Array Spiegel, wenn sie irgendwo im Array
+    nochmal auftaucht, nur in umgekehrter Reihenfolge. Beispielsweise ist im Array
+    \inlinejava{[7, 6, 5, 1, 9, 8, 5, 6, 7]} ein Spiegel vorhanden und zwar \inlinejava{[7,6,5]}.
+    Schreiben Sie eine Methode \inlinejava{int maxMirror(int[] arr)}. Diese bekommt ein Array
+    übergeben und gibt die Länge des größten Spiegels im übergebenen Array zurück. Gibt es keinen
+    Spiegel so wird einfach \inlinejava{0} zurückgeliefert
+
+    \br
+
+    \begin{note}[title=Hinweis, color=tuda-orange]
+      Sie mit zwei Zeigern auf dem ersten und dem letzten Element. Vergleichen Sie nun paarweise
+      die Elemente und überlegen Sie sich, wann Sie die beiden Zeiger weiter in die Mitte bewegen.
+    \end{note}
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V6_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{2}{3}]{Matrix-Multiplikation}
+    Der folgende Code stellt beispielsweise die Matrix
+
+    \begin{equation*}
+      \begin{pmatrix}
+        5 & 8
+        \\
+        1 & -3
+      \end{pmatrix}
+    \end{equation*}
+
+    dar.
+
+    \lstinputlisting[style=Java]{codes/V7_Task.java}
+    Sie sehen also, dass Sie einem Array in Java beliebig viele Dimensionen geben können.
+
+    \br
+
+    Schreiben Sie eine Methode \inlinejava{int[][] matrixMul(int[][] mat1, int[][] mat2)}.
+
+    \br
+
+    Die Methode bekommt zwei Matrizen, dargestellt durch zwei zwei-dimensionale Arrays, übergeben
+    und gibt die resultierende Produktmatrix zurück. Sollte die Multiplikation aufgrund falscher
+    Dimensionen nicht möglich sein, so geben Sie eine entsprechende Nachricht auf dem Bildschirm
+    aus und liefern \inlinejava{null} zurück
+
+    \br
+
+    \begin{note}[title=Hinweis:, color=tuda-orange]
+      Verwenden Sie drei ineinander geschachtelte \inlinejava{for}-Schleifen. Die erste iteriert
+      über die Reihen von \inlinejava{mat1}, die zweite iteriert über die Spalten von
+      \inlinejava{mat1} und die Reihen von \inlinejava{mat2} und die letzte iteriert über die
+      Spalten von \inlinejava{mat2}.
+    \end{note}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V7_Solution.java}
+
+      \begin{note}[title=Information:]
+        Ein zweidimensionales Array ist ein Array, dessen Komponententypen ebenfalls Arrays sind.
+
+        \begin{figure}[H]
+          \centering
+          \begin{tikzpicture}[scale=0.9, transform shape]
+            \begin{scope}[every node/.style={
+            draw,
+            line width=1pt,
+            minimum width=40pt,
+            minimum height=40pt,
+            node distance=-1pt,
+            transform shape,
+            shape=rectangle,}]
+              \node (a) {Index 0};
+              \node[below=of {a}] (b) {Index 1};
+            \end{scope}
+            \begin{scope}[every node/.style={
+            draw,
+            line width=1pt,
+            minimum width=50pt,
+            minimum height=30pt,
+            node distance=-1pt,
+            transform shape,
+            shape=rectangle,}]
+              \node[node distance=25pt, right=of {a}] (c) {5};
+              \node[right=of {c}] (d) {8};
+              \node[node distance=25pt, right=of {b}] (e) {1};
+              \node[right=of {e}] (f) {-3};
+            \end{scope}
+
+            \draw[->] (a) edge (c);
+            \draw[->] (b) edge (e);
+          \end{tikzpicture}
+          \caption{Visualisierung der Matrix als zweidimensionales Array}
+          \label{fig:V7_Information}
+        \end{figure}
+
+        In der Abbildung \ref{fig:V7_Information} hat das Array zwei Elemente (am Index 0 und
+        Index 1). Diese sind auch jeweils Arrays mit zwei Elementen. Beispielsweise würde
+        \inlinejava{matrix[0]} ein Array mit zwei Elementen - und zwar \inlinejava{5} und
+        \inlinejava{8} - zurückgeben. Wenn man die einzelnen Elemente innerhalb der inneren
+        Arrays kriegen möchte, kann man bspw. folgenden Code verwenden:
+
+        \begin{itemize}
+          \item \inlinejava{matrix[0][0]} = 5
+          \item \inlinejava{matrix[0][1]} = 8
+        \end{itemize}
+      \end{note}
+    \end{solution}
+  \end{task}
+
+  \section*{Weitere Roboter-Klassen}
+  In vielen Aufgaben reichen uns die eingeschränkten Methoden eines Roboters der
+  \inlinejava{FopBot}-Werke nicht. Daher definieren wir uns neue Roboter, welche die technischen
+  Anforderungen erfüllen. In den Foliensätzen zu \inlinejava{FopBot} haben Sie bereits Beispiele
+  wie den \inlinejava{SymmTurner} Roboter dazu gesehen.
+
+  \begin{task}[credit=\stars{1}{3}]{CoinPutter}
+    Implementieren Sie zunächst in der aus der Vorlesung bekannten Roboter-Klasse
+    \inlinejava{SymmTurner} die \inlinejava{public void}-Methode \inlinejava{coinMove(int
+    countOfSteps)}: Diese soll \inlinejava{countOfSteps} Schritte nach vorne gehen und vor jedem
+    Schritt einen Coin ablegen. Sollte die geforderte Anzahl an Schritten größer sein als die
+    Anzahl an Coins soll der Roboter einfach stehen bleiben und sich ausschalten. Verwenden Sie
+    dazu die Ihnen aus der Vorlesung bekannte \inlinejava{public}-Methode \inlinejava{void
+    turnOff()}. Sollten mehr Coins vorhanden sein als Schritte gefordert sind, soll er an seiner
+    finalen Position alle verbleibenden Coins ablegen.
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V8_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \clearpagesolution
+
+  \begin{task}[credit=\stars{1}{3}]{Richtungsdreher}
+    In dieser Aufgabe soll eine neue Roboterklasse definiert werden, deren Roboter sich mittels
+    eines einzigen Aufrufs in eine beliebige Richtung drehen können. Erstellen Sie dafür die
+    Klasse \inlinejava{DirectionTurner}, die direkt von der Klasse \inlinejava{Robot} erbt und
+    die parameter- und rückgabelosen \inlinejava{public}-Methoden \inlinejava{turnUp},
+    \inlinejava{turnRight}, \inlinejava{turnDown} und \inlinejava{turnLeft} so implementiert,dass
+    der Roboter nach Aufruf einer dieser Methoden in die entsprechende Richtung blickt.
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V9_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{3}{3}]{TeamRobot}
+    In dieser Aufgabe sollen Sie ihre erste eigene Roboterklasse von Grund auf implementieren.
+    Erstellen Sie dazu eine neue Klasse \inlinejava{TeamRobot}, die die Klasse \inlinejava{Robot}
+    erweitert, also von ihr erbt. Der Konstruktor der Klasse \inlinejava{TeamRobot} übernimmt die
+    Parameter des Konstruktors der Oberklasse \inlinejava{Robot} und besitzt zusätzlich die
+    Parameter \inlinejava{int left} und \inlinejava{int right}. Der Parameter \inlinejava{int
+    left} gibt an, wie viele zusätzliche Roboter beim Aufruf des Konstruktors links neben des
+    TeamRobots platziert werden. Der Parameter \inlinejava{int right} ist analog, für die Roboter
+    rechts. Der \inlinejava{TeamRobot}, sowie die Roboter links und rechts von ihm bilden ein
+    Team. Die zusätzlichen Roboter werden vom \inlinejava{TeamRobot} im Konstruktor erzeugt.
+    Bekommt der \inlinejava{TeamRobot} einen Befehl, so soll dieser von allen Robotern im Team
+    ausgeführt werden. Die zusätzlichen Roboter selbst sind dabei nicht ansprechbar, das heißt
+    auf ihnen können keine Methoden aufgerufen werden. Überlegen Sie sich, wie Sie die Roboter
+    des Teams in der \inlinejava{TeamRobot}-Klasse speichern können und wie Sie die Befehle die ein
+    \inlinejava{TeamRobot} erhält, an alle Roboter im Team weiterreichen können. Die Befehle
+    meinen hier die Methoden: \inlinejava{move()}, \inlinejava{turnLeft()},
+    \inlinejava{pickCoin()} und \inlinejava{putCoin()}.
+
+    \br
+
+    \begin{note}[title=Beispiel:]
+      Beim Erstellen eines TeamRobots mit den Parametern \inlinejava{right = 1} und
+      \inlinejava{left = 2} an der Position \inlinejava{(4, 4)}, werden zusätzlich 3 Roboter
+      erstellt, die dem Team angehören, nämlich an der Position \inlinejava{(2, 4)},
+      \inlinejava{(3, 4)} (links) und \inlinejava{(5, 4)} (rechts).
+    \end{note}
+
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V10_Solution.java}
+    \end{solution}
+  \end{task}
+
+  \begin{task}[credit=\stars{3}{3}]{The final Countdown}
+    In Unix-basierten Systemen wird die Zeit traditionell als vorzeichenbehaftete 32 Bit Ganzzahl
+    gespeichert, die seit dem 1. Januar 1970 vergangenen Sekunden repräsentiert.
+
+    \br
+
+    Schauen Sie folgenden Java-Code an. Beheben Sie sämtliche eingebauten Fehler, um den Code
+    lauffähig zu machen. Was müssen Sie im Code ändern, um die folgende Ausgabe zu erhalten?
+
+    \br
+
+    \begin{center}
+      \textcolor{stringcolor}{\grqq Am 19.1.2038 kommt es zu einem Ueberlauf des Unix
+      Zeitstempels\grqq}
+    \end{center}
+
+    \clearpage
+
+    \lstinputlisting[style=Java]{codes/V11_Task.java}
+
+    \clearpagesolution
+
+    \begin{solution}
+      \lstinputlisting[style=Java]{codes/V11_solution.java}
+
+      \clearpage
+
+      \begin{itemize}
+        \item Zeile 1: \inlinejava{public class A} sollte nicht \textcolor{keywordcolor}{final}
+        sein, da Klasse \inlinejava{B} ansonsten nicht von \inlinejava{A} erben kann.
+        \item Zeile 4: \inlinejava{public int value3}, soll nicht \inlinejava{final} sein und
+        \inlinejava{public}, \inlinejava{protected} (in Subklassen und im Package sichtbar) oder
+        leer sein (standardmäßig im Package sichtbar), da wir ansonsten mit der Methode
+        \inlinejava{changeValue3} den Wert nicht verändern können und auch in der Klasse
+        \inlinejava{B} darauf nicht zugreifen können.
+        \item Zeile 6, 10, 14, 18, 22: Der Zugriffmodifikator muss entweder
+        \textcolor{keywordcolor}{public} oder \inlinejava{protected} (in Subklassen und im
+        Package sichtbar) oder leer sein (standardmäßig im Package sichtbar), da Klasse
+        \inlinejava{B} sonst nicht auf diese Methoden zugreifen kann.
+        \item Zeile 22: \inlinejava{public void} (ohne \inlinejava{final}), da wir ansonsten die
+        Methode in der Klasse \inlinejava{B} nicht überschreiben können.
+        \item Zeile 40, 41: \inlinejava{obj.getValue1()} und \inlinejava{obj.getValue2()}, da die
+        Objektmethoden nur über eine Instanz der Klasse \inlinejava{A} oder \inlinejava{B}
+        angesprochen werden können.
+      \end{itemize}
+
+      \begin{note}
+        Mehr Informationen zu Zugriffmodifikatoren können Sie unter folgendem Verweis finden:
+
+        \begin{center}
+          \url{https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html}
+        \end{center}
+      \end{note}
+    \end{solution}
+  \end{task}
+\end{document}

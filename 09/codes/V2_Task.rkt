@@ -1,0 +1,1 @@
+(define-struct lst-item (value  next))
