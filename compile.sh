@@ -30,7 +30,7 @@ PATHS_CHANGES=$(git diff --name-only "*.tex")
 EXISTS_OUTPUT_DIR=$(test -f "$output_dir")
 PATHS_CLASS="$DIR_BASE/tuda-exercise.cls"
 
-if test -f "$output_dir"; then
+if [ -d "$DIR_DESTINATION" ]; then
   EXISTS_OUTPUT_DIR=true
 else
   EXISTS_OUTPUT_DIR=false
