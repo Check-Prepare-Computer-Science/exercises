@@ -2,8 +2,8 @@
  * Shifts all element of this list on position to the left.
  */
 public void ringShiftLeft() {
-  // Cannot shift an empty list
-  if (head == null) {
+  // Cannot shift an empty list or a single element list
+  if (head == null || head.next == null) {
     return;
   }
    /*
